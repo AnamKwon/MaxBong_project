@@ -37,14 +37,4 @@ def select_all(n, dists, images):
 
 
 
-#-------------------------------------------------
-# dists = feature_extraction(path)[1]
-# images = feature_extraction(path)[0]
-# print(select_all(5,dists,images))
-
-if len(select_all(5,feature_extraction(path)[1],feature_extraction(path)[0])) ==1:
-    print('X')
-else:
-    print(select_all(5,feature_extraction(path)[1],feature_extraction(path)[0]))
-
 
