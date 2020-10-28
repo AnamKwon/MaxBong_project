@@ -27,7 +27,7 @@ def feature_extraction(path):
     dists = distance.squareform(distance.pdist(features))
 
     return images, dists
-
+# print(len(feature_extraction(path)[0]))
 
 def select_all(n, dists, images):
     dists_idx_sorted = dists[n].argsort()                                      
@@ -38,8 +38,15 @@ def select_all(n, dists, images):
     return similar_list
 
 
+
+img_dict = dict()
+for i in range(len(feature_extraction(path)[0])):
+    img_dict[str(feature_extraction(path)[0][i])] = select_all(i,feature_extraction(path)[1],feature_extraction(path)[0])
 #---------------------------------------------------------------------------------------------
 #---------------------------------------------------------------------------------------------
+print(img_dict)
+
+
 
 def size_normal(path):
 
@@ -89,7 +96,8 @@ def imgwrite(slist,f_name):
         cv2.imwrite(str(f_name)+'/' + str(count)+'.jpg',img)
         count = count + 1
 
-imgwrite(select_all(5,feature_extraction(path)[1],feature_extraction(path)[0]),'test_sim_img')
+# imgwrite(select_all(5,feature_extraction(path)[1],feature_extraction(path)[0]),'test_sim_img')
 
 
-        
+
+
