@@ -38,14 +38,37 @@ def visualize(image, bboxes, category_ids, category_id_to_name):
     plt.imshow(img)
     plt.show()
 
+def convert(format, bbox):
+    if format == 'coco':
+        x_min, y_min, w, h = bbox
+        x_min, x_max, y_min, y_max = int(x_min), int(x_min + w), int(y_min), int(y_min + h)
+    elif format == 'voc':
+        return bbox
+    elif format == 'yolo':
+        x, y, w, h = bbox
+        x_min = int(x - w / 2 + 1)
+        x_max = int(x_min + w)
+        y_min = int(y - h / 2 + 1)
+        y_max = int(y_min + h)
+
+
+
 image = cv2.imread('49269.jpg')
 image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
-bboxes = [[90.84,27.53,337.2,474.84], [6.48,315.47,269.47,317.4]]
-category_ids = [19, 18]
+bboxes = [[6.48,315.47,269.47,317.4], [90.84,27.53,337.2,474.84]]
+category_ids = [18, 19]
 
 # We will use the mapping from category_id to the class name
 # to visualize the class label for the bounding box on the image
-category_id_to_name = {19: 'horse', 18: 'dog'}
+category_id_to_name = {18: 'dog', 18: 'horse'}
+
+convert(coco, bboxes)
 
 visualize(image, bboxes, category_ids, category_id_to_name)
+
+def vertical_flip(image):
+    return cv2.flip(image, 0)
+
+def horizontal_flip(image):
+    return cv2.flip(image, 1)
