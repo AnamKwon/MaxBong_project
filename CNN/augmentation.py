@@ -63,7 +63,7 @@ category_ids = [18, 19]
 # to visualize the class label for the bounding box on the image
 category_id_to_name = {18: 'dog', 18: 'horse'}
 
-convert(coco, bboxes)
+convert('coco', bboxes)
 
 visualize(image, bboxes, category_ids, category_id_to_name)
 
