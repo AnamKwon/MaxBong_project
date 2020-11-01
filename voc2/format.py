@@ -7,10 +7,9 @@ from xml.etree import ElementTree as ET
 
 os.chdir('dataset')
 
-
 class COCO:
-
     def __init__(self, file):
+
         with open(file) as f :
             file = json.loads(f.read())
         file_list = []
@@ -43,7 +42,74 @@ class COCO:
             b = {self.id_to_categories[num['category_id']]: {'bbox': num['bbox'], 'segmentation': num['segmentation']}}
             self.files_dict[self.id_to_file[num['image_id']]]['object'].append(b)
 
+    def to_voc(self, path = 'coco_to_voc'):
+        try :
+            os.mkdir(path)
+        except :
+            pass
+        for key, objects in self.files_dict.items():
+            voc = \
+                f'''<annotation>
+        <folder></folder>
+        <filename>{key}</filename>
+        <source>
+                <database>COCO To VOC Database</database>
+		        <annotation>PASCAL VOC2007</annotation>
+        </source>
+        <size>
+                <width>{objects['width']}</width>
+                <height>{objects['height']}</height>
+                <depth>3</depth>
+        </size>
+        <segmented>0</segmented>'''
+            for object_child in objects['object']:
+                name = list(object_child.keys())[0]
+                object_child = object_child[name]
+                if object_child['segmentation'] != [] :
+                    voc.replace('<segmented>0</segmented>', '<segmented>1</segmented>')
+                voc += f'''
+        <object>
+                <name>{name}</name>
+                <pose>Unspecified</pose>
+                <truncated>0</truncated>
+                <difficult>0</difficult>
+                <occluded>0</occluded>
+                <bndbox>
+                        <xmin>{round(object_child['bbox'][0] + 1)}</xmin>
+                        <xmax>{round(object_child['bbox'][0] + object_child['bbox'][2] + 1)}</xmax>
+                        <ymin>{round(object_child['bbox'][1] + 1)}</ymin>
+                        <ymax>{round(object_child['bbox'][1] + object_child['bbox'][3] + 1)}</ymax>
+                </bndbox>
+        </object>'''
+            voc += '''
+</annotation>'''
+            with open(f'{path}/{key.rsplit(".",1)[0]}.xml','w') as f :
+                f.write(voc)
 
+    def to_yolo(self,path='coco_to_yolo') :
+        try :
+            os.mkdir(path)
+        except :
+            pass
+        labes = [value for _, value in sorted(self.id_to_categories.items(), key=lambda t:t[0])]
+        with open(f'{path}/labels.txt','w') as f :
+            f.write('\n'.join(labes))
+        for key, objects in self.files_dict.items():
+            file = open(f'{path}/{key.rsplit(".",1)[0]}.txt','w')
+            cols = []
+            width = objects['width']
+            height = objects['height']
+            for object_child in objects['object']:
+                name = list(object_child.keys())[0]
+                object_child = object_child[name]
+                col = [0,0,0,0,0]
+                col[3] = object_child['bbox'][2] / width
+                col[4] = object_child['bbox'][3] / height
+                col[1] = (object_child['bbox'][0] + (object_child['bbox'][2] / 2)) / width
+                col[2] = (object_child['bbox'][1] + (object_child['bbox'][3] / 2)) / height
+                col[0] = labes.index(name)
+                cols.append(' '.join(map(str,col)))
+            file.write('\n'.join(cols))
 class YOLO :
 
     def __init__(self, files=['000001.txt'],label='labels.txt'):
@@ -87,7 +153,6 @@ class YOLO :
                 box[1] = round((float(object[2]) * height) - (box[3]/2))
                 object_info = {object_name : {'bbox' : box, 'segmentation' : []}}
                 self.files_dict[file]['object'].append(object_info)
-
 
 class VOC :
 
@@ -134,9 +199,7 @@ class VOC :
                 object_info = {object_name : {'bbox' : box, 'segmentation' : segmentation}}
                 self.files_dict[filename]['object'].append(object_info)
 
-
 def to_coco(dataset, path = 'voc_to_coco', user='max_bong'):
-
     try :
         os.mkdir(path)
     except: pass;
@@ -190,7 +253,6 @@ def to_coco(dataset, path = 'voc_to_coco', user='max_bong'):
     with open(f"{path}/annotations.json","w") as f :
         json.dump(coco, f)
 
-
 def to_yolo(dataset,path='voc_to_yolo') :
 
     try :
@@ -216,8 +278,6 @@ def to_yolo(dataset,path='voc_to_yolo') :
             col[0] = labels.index(name)
             cols.append(' '.join(map(str,col)))
         file.write('\n'.join(cols))
-
-
 def to_voc(dataset, path = 'coco_to_voc'):
 
     try :
