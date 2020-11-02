@@ -49,13 +49,13 @@
       </property>
       <property name="minimumSize">
        <size>
-        <width>200</width>
+        <width>250</width>
         <height>0</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>300</width>
+        <width>250</width>
         <height>16777215</height>
        </size>
       </property>
@@ -101,6 +101,18 @@
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="minimumSize">
+          <size>
+           <width>250</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>250</width>
+           <height>16777215</height>
+          </size>
+         </property>
         </widget>
        </item>
       </layout>
@@ -108,6 +120,9 @@
     </item>
     <item>
      <layout class="QVBoxLayout" name="Main_layout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
       <item>
        <widget class="QFrame" name="horizontalFrame">
         <property name="enabled">
@@ -119,42 +134,112 @@
           <height>100</height>
          </size>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
          <item>
-          <widget class="QLabel" name="Image_V">
-           <property name="minimumSize">
-            <size>
-             <width>400</width>
-             <height>0</height>
-            </size>
+          <layout class="QVBoxLayout" name="Main_img">
+           <property name="spacing">
+            <number>0</number>
            </property>
-           <property name="text">
-            <string/>
+           <property name="sizeConstraint">
+            <enum>QLayout::SetFixedSize</enum>
            </property>
-          </widget>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_3">
            <item>
-            <widget class="QLabel" name="Image_D_V">
-             <property name="minimumSize">
-              <size>
-               <width>400</width>
-               <height>0</height>
-              </size>
+            <widget class="QScrollArea" name="scrollArea">
+             <property name="widgetResizable">
+              <bool>true</bool>
              </property>
-             <property name="text">
-              <string/>
-             </property>
+             <widget class="QWidget" name="scrollAreaWidgetContents_2">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>390</width>
+                <height>543</height>
+               </rect>
+              </property>
+              <layout class="QHBoxLayout" name="horizontalLayout_2">
+               <property name="spacing">
+                <number>0</number>
+               </property>
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QLabel" name="Image_V">
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
             </widget>
            </item>
           </layout>
+         </item>
+         <item>
+          <widget class="QFrame" name="Image_D_H">
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <property name="sizeConstraint">
+             <enum>QLayout::SetFixedSize</enum>
+            </property>
+            <item>
+             <widget class="QLabel" name="Image_D_V">
+              <property name="minimumSize">
+               <size>
+                <width>400</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="mouseTracking">
+               <bool>true</bool>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::Box</enum>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
          </item>
         </layout>
        </widget>
       </item>
       <item>
        <widget class="QFrame" name="File_data">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>100</height>
+         </size>
+        </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
@@ -162,7 +247,7 @@
          </size>
         </property>
         <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
+         <enum>QFrame::Box</enum>
         </property>
         <property name="frameShadow">
          <enum>QFrame::Raised</enum>
@@ -173,14 +258,20 @@
     </item>
     <item>
      <widget class="QFrame" name="right_layout">
+      <property name="minimumSize">
+       <size>
+        <width>150</width>
+        <height>0</height>
+       </size>
+      </property>
       <property name="maximumSize">
        <size>
-        <width>200</width>
+        <width>150</width>
         <height>16777215</height>
        </size>
       </property>
       <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
+       <enum>QFrame::Box</enum>
       </property>
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
@@ -213,10 +304,6 @@
     <addaction name="actionOpen_File"/>
     <addaction name="actionOpen_Directory"/>
     <addaction name="menuOpen_Data_set"/>
-    <addaction name="separator"/>
-    <addaction name="actionAdd_File"/>
-    <addaction name="actionAdd_Directory"/>
-    <addaction name="actionAdd_Data_set"/>
     <addaction name="separator"/>
     <addaction name="actionSave_as"/>
    </widget>
@@ -392,7 +479,7 @@
   </action>
   <action name="actionAdd_File">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="text">
     <string>Add Files...</string>
