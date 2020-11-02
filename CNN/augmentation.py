@@ -9,8 +9,7 @@ TEXT_COLOR = (255, 255, 255) # White
 
 def visualize_bbox(img, bbox, class_name, color=BOX_COLOR, thickness=2):
     """Visualizes a single bounding box on the image"""
-    x_min, y_min, w, h = bbox
-    x_min, x_max, y_min, y_max = int(x_min), int(x_min + w), int(y_min), int(y_min + h)
+    x_min, x_max, y_min, y_max = bbox
 
     cv2.rectangle(img, (x_min, y_min), (x_max, y_max), color=color, thickness=thickness)
 
@@ -39,17 +38,17 @@ def visualize(image, bboxes, category_ids, category_id_to_name):
     plt.show()
 
 def convert(format, bbox):
-    if format == 'coco':
-        x_min, y_min, w, h = bbox
-        x_min, x_max, y_min, y_max = int(x_min), int(x_min + w), int(y_min), int(y_min + h)
-    elif format == 'voc':
-        return bbox
-    elif format == 'yolo':
-        x, y, w, h = bbox
-        x_min = int(x - w / 2 + 1)
-        x_max = int(x_min + w)
-        y_min = int(y - h / 2 + 1)
-        y_max = int(y_min + h)
+    for box in bbox:
+        if format == 'coco':
+            x_min, y_min, w, h = box[:4]
+            x_max = x_min + w
+            y_max = y_min + h
+        elif format == 'voc':
+            x_min, y_min, x_max, y_max = box[:4]
+        elif format == 'yolo':
+            x, y, w, h = box[:4]
+            x_min, x_max, y_min, y_max = int(x - w / 2 + 1), int(x_min + w), int(y - h / 2 + 1), int(y_min + h)
+        box[0, 1, 2, 3] = x_min, x_max, y_min, y_max
 
 
 
