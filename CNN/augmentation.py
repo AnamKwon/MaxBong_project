@@ -41,14 +41,13 @@ def convert(format, bbox):
     for box in bbox:
         if format == 'coco':
             x_min, y_min, w, h = box[:4]
-            x_max = x_min + w
-            y_max = y_min + h
+            box[:4] = int(x_min), int(x_min + w), int(y_min), int(y_min + h)
         elif format == 'voc':
-            x_min, y_min, x_max, y_max = box[:4]
+            return bbox
         elif format == 'yolo':
             x, y, w, h = box[:4]
             x_min, x_max, y_min, y_max = int(x - w / 2 + 1), int(x_min + w), int(y - h / 2 + 1), int(y_min + h)
-        box[0, 1, 2, 3] = x_min, x_max, y_min, y_max
+            box[:4] = x_min, x_max, y_min, y_max
 
 
 
@@ -60,7 +59,7 @@ category_ids = [18, 19]
 
 # We will use the mapping from category_id to the class name
 # to visualize the class label for the bounding box on the image
-category_id_to_name = {18: 'dog', 18: 'horse'}
+category_id_to_name = {18: 'dog', 19: 'horse'}
 
 convert('coco', bboxes)
 
