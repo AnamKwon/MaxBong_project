@@ -5,9 +5,6 @@ import glob
 import cv2
 from xml.etree import ElementTree as ET
 
-#os.chdir('dataset')
-
-
 class COCO:
 
     def __init__(self, file):
@@ -49,7 +46,7 @@ class COCO:
 
 class YOLO :
 
-    def __init__(self, files=['000001.txt'],label='labels.txt'):
+    def __init__(self, files=['000001.txt'], label='labels.txt'):
         file_list = []
         img_file_types = ['jpg',
                           'png',
@@ -274,6 +271,7 @@ def to_voc(dataset, path = 'coco_to_voc'):
 
 def get_image(annotation) :
     return list(annotation.files_dict.keys())
+
 '''
 a = COCO('_annotations.coco.json')
 to_voc(a,'coco_to_voc')
