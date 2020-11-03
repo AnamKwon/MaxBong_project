@@ -9,7 +9,7 @@ TEXT_COLOR = (255, 255, 255) # White
 
 def visualize_bbox(img, bbox, class_name, color=BOX_COLOR, thickness=2):
     """Visualizes a single bounding box on the image"""
-    x_min, x_max, y_min, y_max = bbox
+    x_min, y_min, x_max, y_max = map(int, bbox)
 
     cv2.rectangle(img, (x_min, y_min), (x_max, y_max), color=color, thickness=thickness)
 
@@ -41,19 +41,113 @@ def convert(format, bbox):
     for box in bbox:
         if format == 'coco':
             x_min, y_min, w, h = box[:4]
-            box[:4] = int(x_min), int(x_min + w), int(y_min), int(y_min + h)
+            box[:4] = int(x_min), int(y_min), int(x_min + w), int(y_min + h)
         elif format == 'voc':
             return bbox
         elif format == 'yolo':
             x, y, w, h = box[:4]
-            x_min, x_max, y_min, y_max = int(x - w / 2 + 1), int(x_min + w), int(y - h / 2 + 1), int(y_min + h)
-            box[:4] = x_min, x_max, y_min, y_max
+            x_min, y_min, x_max, y_max = int(x - w / 2 + 1), int(y - h / 2 + 1), int(x_min + w),int(y_min + h)
+            box[:4] = x_min, y_min, x_max, y_max
 
+def normalize_bbox(bbox, rows, cols):
+    """Normalize coordinates of a bounding box. Divide x-coordinates by image width and y-coordinates
+    by image height.
+    """
+    x_min, y_min, x_max, y_max = bbox[:4]
+
+    if rows <= 0:
+        raise ValueError("Argument rows must be positive integer")
+    if cols <= 0:
+        raise ValueError("Argument cols must be positive integer")
+
+    x_min, x_max = x_min / cols, x_max / cols
+    y_min, y_max = y_min / rows, y_max / rows
+
+    bbox[:4] = x_min, y_min, x_max, y_max
+    return bbox
+
+def normalize_bboxes(bboxes, rows, cols):
+    """Normalize a list of bounding boxes.
+    Args:
+        bboxes (List[tuple]): Denormalized bounding boxes `[(x_min, y_min, x_max, y_max)]`.
+        rows (int): Image height.
+        cols (int): Image width.
+    Returns:
+        List[tuple]: Normalized bounding boxes `[(x_min, y_min, x_max, y_max)]`.
+    """
+    return [normalize_bbox(bbox, rows, cols) for bbox in bboxes]
+
+def denormalize_bbox(bbox, rows, cols):
+    """Denormalize coordinates of a bounding box. Multiply x-coordinates by image width and y-coordinates
+    by image height. This is an inverse operation for :func:`~albumentations.augmentations.bbox.normalize_bbox`.
+    Args:
+        bbox (tuple): Normalized bounding box `(x_min, y_min, x_max, y_max)`.
+        rows (int): Image height.
+        cols (int): Image width.
+    Returns:
+        tuple: Denormalized bounding box `(x_min, y_min, x_max, y_max)`.
+    Raises:
+        ValueError: If rows or cols is less or equal zero
+    """
+    x_min, y_min, x_max, y_max= bbox[:4]
+
+    if rows <= 0:
+        raise ValueError("Argument rows must be positive integer")
+    if cols <= 0:
+        raise ValueError("Argument cols must be positive integer")
+
+    x_min, x_max = x_min * cols, x_max * cols
+    y_min, y_max = y_min * rows, y_max * rows
+
+    bbox[:4] = x_min, y_min, x_max, y_max
+    return bbox
+
+def denormalize_bboxes(bboxes, rows, cols):
+    """Denormalize a list of bounding boxes.
+    Args:
+        bboxes (List[tuple]): Normalized bounding boxes `[(x_min, y_min, x_max, y_max)]`.
+        rows (int): Image height.
+        cols (int): Image width.
+    Returns:
+        List[tuple]: Denormalized bounding boxes `[(x_min, y_min, x_max, y_max)]`.
+    """
+    return [denormalize_bbox(bbox, rows, cols) for bbox in bboxes]
+def bbox_flip(bbox, d, rows, cols):
+    """Flip a bounding box either vertically, horizontally or both depending on the value of `d`.
+    """
+    if d == 0:
+        bbox = bbox_vflip(bbox, rows, cols)
+    elif d == 1:
+        bbox = bbox_hflip(bbox, rows, cols)
+    elif d == -1:
+        bbox = bbox_hflip(bbox, rows, cols)
+        bbox = bbox_vflip(bbox, rows, cols)
+    else:
+        raise ValueError("Invalid d value {}. Valid values are -1, 0 and 1".format(d))
+    return bbox
+
+
+def bbox_vflip(bbox, rows, cols):  # skipcq: PYL-W0613
+    x_min, y_min, x_max, y_max = bbox[:4]
+    return x_min, 1 - y_max, x_max, 1 - y_min
+
+def bbox_hflip(bbox, rows, cols):  # skipcq: PYL-W0613
+    x_min, y_min, x_max, y_max = bbox[:4]
+    return 1 - x_max, y_min, 1 - x_min, y_max
+
+def vertical_flip(image):
+    return cv2.flip(image, 0)
+
+
+def horizontal_flip(image):
+    return cv2.flip(image, 1)
 
 
 image = cv2.imread('49269.jpg')
 image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
+
+rows, cols = image.shape[:2]
 bboxes = [[6.48,315.47,269.47,317.4], [90.84,27.53,337.2,474.84]]
 category_ids = [18, 19]
 
@@ -62,11 +156,12 @@ category_ids = [18, 19]
 category_id_to_name = {18: 'dog', 19: 'horse'}
 
 convert('coco', bboxes)
-
+normalize_bboxes(bboxes,rows,cols)
+for bbox in bboxes:
+    bbox[:4] = bbox_vflip(bbox, rows, cols)
+denormalize_bboxes(bboxes, rows, cols)
+image = vertical_flip(image)
 visualize(image, bboxes, category_ids, category_id_to_name)
+print(bboxes)
 
-def vertical_flip(image):
-    return cv2.flip(image, 0)
 
-def horizontal_flip(image):
-    return cv2.flip(image, 1)
