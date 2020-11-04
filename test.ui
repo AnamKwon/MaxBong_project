@@ -1,0 +1,585 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>App</class>
+ <widget class="QWidget" name="App">
+  <property name="windowModality">
+   <enum>Qt::NonModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1138</width>
+    <height>818</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>800</width>
+    <height>600</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout_2">
+   <item>
+    <layout class="QHBoxLayout" name="main_layout">
+     <item>
+      <widget class="QWidget" name="menu_layout" native="true">
+       <property name="minimumSize">
+        <size>
+         <width>220</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>220</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">
+QFrame&gt;QPushButton{background-color:blue;}
+QPushButton{background-color : red;};</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <property name="sizeConstraint">
+         <enum>QLayout::SetDefaultConstraint</enum>
+        </property>
+        <item>
+         <widget class="QPushButton" name="file_open">
+          <property name="minimumSize">
+           <size>
+            <width>200</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>200</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>열기</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QFrame" name="frame">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>50</height>
+           </size>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <widget class="QCheckBox" name="checkBox">
+           <property name="geometry">
+            <rect>
+             <x>30</x>
+             <y>20</y>
+             <width>21</width>
+             <height>19</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>CheckBox</string>
+           </property>
+          </widget>
+          <widget class="QCheckBox" name="checkBox_2">
+           <property name="geometry">
+            <rect>
+             <x>140</x>
+             <y>20</y>
+             <width>21</width>
+             <height>19</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>CheckBox</string>
+           </property>
+          </widget>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="file_trans">
+          <property name="minimumSize">
+           <size>
+            <width>200</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>200</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>데이터셋 변환</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QFrame" name="file_trans_pop">
+          <property name="minimumSize">
+           <size>
+            <width>200</width>
+            <height>120</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>200</width>
+            <height>120</height>
+           </size>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <widget class="QPushButton" name="file_trans_ok">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>90</y>
+             <width>200</width>
+             <height>30</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>변환하기</string>
+           </property>
+          </widget>
+          <widget class="QRadioButton" name="file_to_type1">
+           <property name="geometry">
+            <rect>
+             <x>50</x>
+             <y>35</y>
+             <width>100</width>
+             <height>19</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+          <widget class="QRadioButton" name="file_to_type2">
+           <property name="geometry">
+            <rect>
+             <x>50</x>
+             <y>60</y>
+             <width>100</width>
+             <height>19</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+          <widget class="QLabel" name="file_type">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>10</y>
+             <width>151</width>
+             <height>16</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>현재 데이터 타입은 </string>
+           </property>
+          </widget>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="file_fix">
+          <property name="minimumSize">
+           <size>
+            <width>200</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>200</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>데이터 일괄 수정</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QFrame" name="file_fix_pop">
+          <property name="minimumSize">
+           <size>
+            <width>200</width>
+            <height>170</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>200</width>
+            <height>170</height>
+           </size>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <widget class="QPushButton" name="file_fix_button">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>140</y>
+             <width>200</width>
+             <height>30</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>변환하기</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="_">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>10</y>
+             <width>64</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>파일명 </string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+          <widget class="QTextEdit" name="file_fix_name">
+           <property name="geometry">
+            <rect>
+             <x>80</x>
+             <y>10</y>
+             <width>111</width>
+             <height>31</height>
+            </rect>
+           </property>
+          </widget>
+          <widget class="QLabel" name="_1">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>40</y>
+             <width>64</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>확장자 </string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+          <widget class="QLabel" name="_2">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>70</y>
+             <width>64</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>X </string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+          <widget class="QTextEdit" name="file_fix_x">
+           <property name="geometry">
+            <rect>
+             <x>80</x>
+             <y>70</y>
+             <width>111</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="layoutDirection">
+            <enum>Qt::LeftToRight</enum>
+           </property>
+          </widget>
+          <widget class="QLabel" name="_3">
+           <property name="geometry">
+            <rect>
+             <x>5</x>
+             <y>100</y>
+             <width>64</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Y</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
+          </widget>
+          <widget class="QTextEdit" name="file_fix_y">
+           <property name="geometry">
+            <rect>
+             <x>80</x>
+             <y>100</y>
+             <width>111</width>
+             <height>31</height>
+            </rect>
+           </property>
+          </widget>
+          <widget class="QComboBox" name="file_fix_type">
+           <property name="geometry">
+            <rect>
+             <x>80</x>
+             <y>40</y>
+             <width>111</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="layoutDirection">
+            <enum>Qt::RightToLeft</enum>
+           </property>
+          </widget>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="file_aug">
+          <property name="minimumSize">
+           <size>
+            <width>200</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>200</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>데이터 증강</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QFrame" name="file_aug_pop">
+          <property name="minimumSize">
+           <size>
+            <width>200</width>
+            <height>90</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>200</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::NoFrame</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <widget class="QPushButton" name="fix_aug_button">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>60</y>
+             <width>200</width>
+             <height>30</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>증강하기</string>
+           </property>
+          </widget>
+          <widget class="QCheckBox" name="file_aug_ro">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>5</y>
+             <width>96</width>
+             <height>19</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>회전</string>
+           </property>
+          </widget>
+          <widget class="QCheckBox" name="file_aug_cr">
+           <property name="geometry">
+            <rect>
+             <x>100</x>
+             <y>5</y>
+             <width>96</width>
+             <height>19</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>자르기</string>
+           </property>
+          </widget>
+          <widget class="QCheckBox" name="file_aug_pi">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>30</y>
+             <width>96</width>
+             <height>19</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>픽셀값</string>
+           </property>
+          </widget>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton">
+          <property name="text">
+           <string>데이터 분리</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QListWidget" name="file_list">
+          <property name="minimumSize">
+           <size>
+            <width>200</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>200</width>
+            <height>16777215</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="file_count">
+          <property name="minimumSize">
+           <size>
+            <width>150</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>190</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="layoutDirection">
+           <enum>Qt::LeftToRight</enum>
+          </property>
+          <property name="text">
+           <string>파일 갯수</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="img_view">
+       <property name="minimumSize">
+        <size>
+         <width>500</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QWidget" name="img_check" native="true">
+       <property name="minimumSize">
+        <size>
+         <width>320</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>200</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QListWidget" name="img_check_list">
+          <property name="minimumSize">
+           <size>
+            <width>300</width>
+            <height>0</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="img_check_delete">
+          <property name="text">
+           <string>선택 삭제</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="img_delete">
+          <property name="text">
+           <string>전체 삭제</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+ <slots>
+  <slot>File_open()</slot>
+  <slot>Data_trans_form()</slot>
+  <slot>Data_modification()</slot>
+  <slot>Data_augment()</slot>
+  <slot>View_image()</slot>
+  <slot>V(aaa)</slot>
+ </slots>
+</ui>
