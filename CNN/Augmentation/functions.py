@@ -36,10 +36,11 @@ def bbox_rotate(bbox, angle, rows, cols):
     y_t = -np.sin(angle) * x * scale + np.cos(angle) * y
     x_t = x_t + 0.5
     y_t = y_t + 0.5
+    print('y_t', y_t)
 
     x_min, x_max = min(x_t), max(x_t)
     y_min, y_max = min(y_t), max(y_t)
-
+    print('yminmax', y_min,y_max)
     return x_min, y_min, x_max, y_max
 
 def vertical_flip(image):
@@ -49,7 +50,7 @@ def vertical_flip(image):
 def horizontal_flip(image):
     return cv2.flip(image, 1)
 
-def rotate(image, angle):
+def rotate2(image, angle):
     h, w = image.shape[:2]
     matrix = cv2.getRotationMatrix2D((w / 2, h / 2), angle, 1)
     image = cv2.warpAffine(image, matrix, (w, h))
@@ -112,7 +113,7 @@ def _maybe_process_in_chunks(process_fn, **kwargs):
 
 
 @preserve_channel_dim
-def rotate2(img, angle, interpolation=cv2.INTER_LINEAR, border_mode=cv2.BORDER_REFLECT_101, value=None):
+def rotate(img, angle, interpolation=cv2.INTER_LINEAR, border_mode=cv2.BORDER_REFLECT_101, value=None):
     height, width = img.shape[:2]
     matrix = cv2.getRotationMatrix2D((width / 2, height / 2), angle, 1.0)
 
@@ -141,5 +142,6 @@ def crop(img, x_min, y_min, x_max, y_max):
         )
 
     return img[y_min:y_max, x_min:x_max]
+
 
 

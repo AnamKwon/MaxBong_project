@@ -3,6 +3,7 @@ import cv2
 from matplotlib import pyplot as plt
 import bbox as B
 import functions as F
+import numpy as np
 
 BOX_COLOR = (255, 0, 0) # Red
 TEXT_COLOR = (255, 255, 255) # White
@@ -42,22 +43,33 @@ def visualize(image, bboxes, category_ids, category_id_to_name):
 image = cv2.imread('./49269.jpg')
 image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 rows, cols = image.shape[:2]
-bboxes = [[6.48,315.47,269.47,317.4], [90.84,27.53,337.2,474.84]]
+bboxes =  [[6.48,315.47,269.47,317.4], [90.84,27.53,337.2,474.84]]
 category_ids = [18, 19]
 
 # We will use the mapping from category_id to the class name
 # to visualize the class label for the bounding box on the image
 category_id_to_name = {18: 'dog', 19: 'horse'}
 
-B.convert('coco', bboxes)
-B.normalize_bboxes(bboxes,rows,cols)
+
+
+# 이미지 변환
+# 일반 rotate 싱행
+image_1 = F.rotate2(image, 45)
+# albumentation rotate 실행
+image_2 = F.rotate(image, 45, interpolation=cv2.INTER_LINEAR, border_mode=cv2.BORDER_REFLECT_101, value=None)
+rows, cols = image.shape[:2]
+
+B.convert('coco',bboxes)
+B.normalize_bboxes(bboxes, rows, cols)
 # bbox 변환
 for bbox in bboxes:
     bbox[:4] = F.bbox_rotate(bbox, 45, rows, cols)
+    bbox[:4]= tuple(np.clip(bbox[:4], 0, 1.0))
+    print('one',bbox)
+
 B.denormalize_bboxes(bboxes, rows, cols)
-# 이미지 변환
-image = F.rotate(image, 45)
+# image_3 = F.rotate_image(image, 45)
 #화면출력
-visualize(image, bboxes, category_ids, category_id_to_name)
-
-
+visualize(image_1, bboxes, category_ids, category_id_to_name)
+visualize(image_2, bboxes, category_ids, category_id_to_name)
+print(bboxes)

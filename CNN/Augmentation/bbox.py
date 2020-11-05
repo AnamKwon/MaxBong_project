@@ -5,11 +5,12 @@ def convert(format, bbox):
             x_min, y_min, w, h = box[:4]
             box[:4] = int(x_min), int(y_min), int(x_min + w), int(y_min + h)
         elif format == 'voc':
-            return bbox
+            return box
         elif format == 'yolo':
             x, y, w, h = box[:4]
-            x_min, y_min, x_max, y_max = int(x - w / 2 + 1), int(y - h / 2 + 1), int(x_min + w),int(y_min + h)
+            x_min, y_min, x_max, y_max = int(x - w / 2 + 1), int(y - h / 2 + 1), int(x_min + w), int(y_min + h)
             box[:4] = x_min, y_min, x_max, y_max
+
 
 # BoundingBox Normalize
 def normalize_bbox(bbox, rows, cols):
