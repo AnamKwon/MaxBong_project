@@ -1,27 +1,29 @@
 import cv2
 import numpy as np
-import random
 from functools import wraps
+import random
 
 def bbox_vflip(bbox, rows, cols):
     x_min, y_min, x_max, y_max = bbox[:4]
-    return x_min, 1 - y_max, x_max, 1 - y_min
+    bbox[:4] = x_min, 1 - y_max, x_max, 1 - y_min
+    return bbox
 
 def bbox_hflip(bbox, rows, cols):
     x_min, y_min, x_max, y_max = bbox[:4]
-    return 1 - x_max, y_min, 1 - x_min, y_max
+    bbox[:4] = 1 - x_max, y_min, 1 - x_min, y_max
+    return bbox
 
 # BoundingBox Flip
 def bbox_flip(bbox, d, rows, cols):
     """Flip a bounding box either vertically, horizontally or both depending on the value of `d`.
     """
     if d == 0:
-        bbox = bbox_vflip(bbox, rows, cols)
+        bbox[:4] = bbox_vflip(bbox, rows, cols)
     elif d == 1:
-        bbox = bbox_hflip(bbox, rows, cols)
+        bbox[:4] = bbox_hflip(bbox, rows, cols)
     elif d == -1:
-        bbox = bbox_hflip(bbox, rows, cols)
-        bbox = bbox_vflip(bbox, rows, cols)
+        bbox[:4] = bbox_hflip(bbox, rows, cols)
+        bbox[:4] = bbox_vflip(bbox, rows, cols)
     else:
         raise ValueError("Invalid d value {}. Valid values are -1, 0 and 1".format(d))
     return bbox
@@ -47,13 +49,28 @@ def vertical_flip(image):
 
 
 def horizontal_flip(image):
-    return np.ascontiguousarray(image[:, ::-1, ...])
+    return np.ascontiguousarray(img[:, ::-1, ...])
 
 def rotate2(image, angle):
     h, w = image.shape[:2]
     matrix = cv2.getRotationMatrix2D((w / 2, h / 2), angle, 1)
     image = cv2.warpAffine(image, matrix, (w, h))
     return image
+
+def preserve_shape(func):
+    """
+    Preserve shape of the image
+    """
+
+    @wraps(func)
+    def wrapped_function(img, *args, **kwargs):
+        shape = img.shape
+        result = func(img, *args, **kwargs)
+        result = result.reshape(shape)
+        return result
+
+    return wrapped_function
+
 
 def preserve_channel_dim(func):
     """
@@ -142,7 +159,6 @@ def crop(img, x_min, y_min, x_max, y_max):
 
     return img[y_min:y_max, x_min:x_max]
 
-
 def brightness(img, low, high):
     value = random.uniform(low, high)
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
@@ -153,4 +169,24 @@ def brightness(img, low, high):
     hsv[:,:,2][hsv[:,:,2]>255]  = 255
     hsv = np.array(hsv, dtype = np.uint8)
     img = cv2.cvtColor(hsv, cv2.COLOR_HSV2BGR)
+    return img
+
+@preserve_shape
+def _brightness_contrast_adjust_uint(img, alpha=1, beta=0, beta_by_max=False):
+    dtype = np.dtype("uint8")
+
+    max_value = MAX_VALUES_BY_DTYPE[dtype]
+
+    lut = np.arange(0, max_value + 1).astype("float32")
+
+    if alpha != 1:
+        lut *= alpha
+    if beta != 0:
+        if beta_by_max:
+            lut += beta * max_value
+        else:
+            lut += beta * np.mean(img)
+
+    lut = np.clip(lut, 0, max_value).astype(dtype)
+    img = cv2.LUT(img, lut)
     return img
