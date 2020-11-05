@@ -37,7 +37,6 @@ def bbox_rotate(bbox, angle, rows, cols):
     y_t = -np.sin(angle) * x * scale + np.cos(angle) * y
     x_t = x_t + 0.5
     y_t = y_t + 0.5
-    print('y_t', y_t)
 
     x_min, x_max = min(x_t), max(x_t)
     y_min, y_max = min(y_t), max(y_t)
