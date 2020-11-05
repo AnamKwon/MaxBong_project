@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+import random
 from functools import wraps
 
 def bbox_vflip(bbox, rows, cols):
@@ -40,15 +41,14 @@ def bbox_rotate(bbox, angle, rows, cols):
 
     x_min, x_max = min(x_t), max(x_t)
     y_min, y_max = min(y_t), max(y_t)
-    print('yminmax', y_min,y_max)
     return x_min, y_min, x_max, y_max
 
 def vertical_flip(image):
-    return cv2.flip(image, 0)
+    return np.ascontiguousarray(image[::-1, ...])
 
 
 def horizontal_flip(image):
-    return cv2.flip(image, 1)
+    return np.ascontiguousarray(image[:, ::-1, ...])
 
 def rotate2(image, angle):
     h, w = image.shape[:2]
@@ -144,4 +144,14 @@ def crop(img, x_min, y_min, x_max, y_max):
     return img[y_min:y_max, x_min:x_max]
 
 
-
+def brightness(img, low, high):
+    value = random.uniform(low, high)
+    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+    hsv = np.array(hsv, dtype = np.float64)
+    hsv[:,:,1] = hsv[:,:,1]*value
+    hsv[:,:,1][hsv[:,:,1]>255]  = 255
+    hsv[:,:,2] = hsv[:,:,2]*value
+    hsv[:,:,2][hsv[:,:,2]>255]  = 255
+    hsv = np.array(hsv, dtype = np.uint8)
+    img = cv2.cvtColor(hsv, cv2.COLOR_HSV2BGR)
+    return img
