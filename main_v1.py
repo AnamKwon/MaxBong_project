@@ -9,6 +9,43 @@ from PyQt5 import QtGui
 from PyQt5 import uic
 from PyQt5 import QtCore
 from PyQt5.QtCore import pyqtSlot
+class Transform(QtWidgets.QDialog) :
+    def __init__(self, parent=None):
+        super().__init__()
+        QtWidgets.QDialog.__init__(self, parent)
+        print(1)
+        self.ui = uic.loadUi('dialog.ui',self)
+        print(2)
+        self.ui.file_name.clicked.connect(self.Name)
+        print(3)
+        self.ui.height.clicked.connect(self.Height)
+        print(4)
+        self.ui.width.clicked.connect(self.Width)
+        print(5)
+        self.ui.types.clicked.connect(self.Types)
+        print(self.ui.file_name_input.text())
+
+
+    def Name(self):
+        self.ui.file_name_input.setEnabled(not self.ui.file_name_input.isEnabled())
+
+    def Height(self):
+        self.ui.height_input.setEnabled(not self.ui.height_input.isEnabled())
+
+    def Width(self):
+        self.ui.width_input.setEnabled(not self.ui.width_input.isEnabled())
+
+    def Types(self):
+        self.ui.comboBox.setEnabled(not self.ui.comboBox.isEnabled())
+
+    def onOKButtonClicked(self):
+        self.accept()
+
+    def onCancelButtonClicked(self):
+        self.reject()
+
+    def showModal(self):
+        return super().exec_()
 
 class Form(QtWidgets.QMainWindow):
 
@@ -32,6 +69,8 @@ class Form(QtWidgets.QMainWindow):
         self.ui.File_L.clicked.connect(self.Img_view)
         self.ui.Img_D_V_L.clicked.connect(self.Img_view_D)
         self.ui.label_object.clicked.connect(self.test_list)
+        self.ui.actionData_Trans_Form.triggered.connect(self.Trans_form)
+        self.ui.actionData_Trans_Form.setEnabled(True)
         # self.startpos = None
         # self.endpos = None
         self.on_similar = False
@@ -39,6 +78,13 @@ class Form(QtWidgets.QMainWindow):
         a = ['1','2','3','4','5']
         self.ui.label_object.addItems(a)
         self.test_item = ''
+    def Trans_form(self):
+        win = Transform()
+        r = win.showModal()
+        print(1)
+        if r :
+            print(2)
+            print(win.ui.file_name_input.text())
 
     def Img_check(self):
         self.on_similar = True
@@ -101,9 +147,6 @@ class Form(QtWidgets.QMainWindow):
         if self.test_item != '' :
             if e.key() == QtCore.Qt.Key_Delete :
                 self.ui.label_object.takeItem(self.test_item)
-                print(self.test_item.text())
-
-
 
     @pyqtSlot()
     def Img_view(self):
@@ -218,5 +261,3 @@ if __name__ == '__main__':
     w = Form()
     sys.exit(app.exec())
 
-QtWidgets.QListWidget.currentItem()
-QtWidgets.QListWidget.currentRow()
