@@ -109,17 +109,17 @@ def rotation(img, angle):
 
 def img_aug(img):
     ar = []
-    ar.append(horizontal_shift(img, 0.7))
-    ar.append(vertical_shift(img, 0.7))
+    # ar.append(horizontal_shift(img, 0.7))
+    # ar.append(vertical_shift(img, 0.7))
     ar.append(brightness(img, 0.5, 3))
-    ar.append(zoom(img, 0.3))
-    ar.append(channel_shift(img, 60))
-    ar.append(horizontal_flip(img, True))
-    ar.append(vertical_flip(img, True))
+    # ar.append(zoom(img, 0.3))
+    # ar.append(channel_shift(img, 60))
+    # ar.append(horizontal_flip(img, True))
+    # ar.append(vertical_flip(img, True))
     ar.append(rotation(img, 35))
-    for i in range(0, len(ar)):
-        filename = 'augmentation/lena_aug' + str(i + 1) + '.png'
-        cv2.imwrite(filename, ar[i])
+    # for i in range(0, len(ar)):
+    #     filename = 'augmentation/lena_aug' + str(i + 1) + '.png'
+    #     cv2.imwrite(filename, ar[i])
 
 
     # cv2.imshow('horizontal', image1)
@@ -130,7 +130,8 @@ def img_aug(img):
     # cv2.imshow('horflit', image6)
     # cv2.imshow('verflit', image7)
     # cv2.imshow('rotation', image8)
-
-img_aug(img, 3)
+img_aug(img)
+cv2.imshow('bright',ar[0])
+cv2.imshow('rotate',ar[1])
 cv2.waitKey(0)
 cv2.destroyAllWindows()
