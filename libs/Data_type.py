@@ -1,7 +1,7 @@
 import os
 import json
 import time
-import glob
+from glob import glob
 import cv2
 from xml.etree import ElementTree as ET
 
@@ -16,7 +16,7 @@ class COCO:
                           'bmp',
                           'jpeg']
         for types in img_file_types :
-            file_list += glob.glob(f'*.{types}')
+            file_list += glob(f'*.{types}')
         self.files_dict = {}
         self.file_to_id = {}
         self.id_to_file = {}
@@ -53,7 +53,7 @@ class YOLO :
                           'bmp',
                           'jpeg']
         for types in img_file_types :
-            file_list += glob.glob(f'*.{types}')
+            file_list += glob(f'*.{types}')
         self.files_dict = {}
         self.file_to_id = {}
         file_to_id_num = 0
@@ -101,7 +101,7 @@ class VOC :
                           'bmp',
                           'jpeg']
         for types in img_file_types :
-            file_list += glob.glob(f'*.{types}')
+            file_list += glob(f'*.{types}')
         self.files_dict = {}
         self.file_to_id = {}
         file_to_id_num = 0
@@ -160,7 +160,7 @@ def to_coco(dataset, path = 'voc_to_coco', user='max_bong'):
                "name": user
                }
               ],
-         "id_to_categories" :
+         "categories" :
              [{"id":key,
                "name" : value,
                "supercategory": f"{user}_project"} for key, value in dataset.id_to_categories.items()],
