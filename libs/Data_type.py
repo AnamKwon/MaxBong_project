@@ -1,12 +1,9 @@
 import os
 import json
 import time
-import glob
+from glob import glob
 import cv2
 from xml.etree import ElementTree as ET
-
-os.chdir('dataset')
-
 
 class COCO:
 
@@ -14,9 +11,12 @@ class COCO:
         with open(file) as f :
             file = json.loads(f.read())
         file_list = []
-        img_file_types = ['jpg','png','bmp']
-        for type in img_file_types :
-            file_list += glob.glob(f'*.{type}')
+        img_file_types = ['jpg',
+                          'png',
+                          'bmp',
+                          'jpeg']
+        for types in img_file_types :
+            file_list += glob(f'*.{types}')
         self.files_dict = {}
         self.file_to_id = {}
         self.id_to_file = {}
@@ -46,11 +46,14 @@ class COCO:
 
 class YOLO :
 
-    def __init__(self, files=['000001.txt'],label='labels.txt'):
+    def __init__(self, files=['000001.txt'], label='labels.txt'):
         file_list = []
-        img_file_types = ['jpg','png','bmp','jpeg']
-        for type in img_file_types :
-            file_list += glob.glob(f'*.{type}')
+        img_file_types = ['jpg',
+                          'png',
+                          'bmp',
+                          'jpeg']
+        for types in img_file_types :
+            file_list += glob(f'*.{types}')
         self.files_dict = {}
         self.file_to_id = {}
         file_to_id_num = 0
@@ -67,8 +70,8 @@ class YOLO :
                 continue
             with open(filename) as f :
                 objects = f.readlines()
-            self.file_to_id[filename] = file_to_id_num
-            self.id_to_file[file_to_id_num] = filename
+            self.file_to_id[file] = file_to_id_num
+            self.id_to_file[file_to_id_num] = file
             file_to_id_num += 1
             height, width, depth = cv2.imread(file).shape
             self.files_dict[file] = {'width': width,
@@ -91,11 +94,14 @@ class YOLO :
 
 class VOC :
 
-    def __init__(self,files=['000001.xml']):
+    def __init__(self, files=['000001.xml']):
         file_list = []
-        img_file_types = ['jpg','png','bmp']
-        for type in img_file_types :
-            file_list += glob.glob(f'*.{type}')
+        img_file_types = ['jpg',
+                          'png',
+                          'bmp',
+                          'jpeg']
+        for types in img_file_types :
+            file_list += glob(f'*.{types}')
         self.files_dict = {}
         self.file_to_id = {}
         file_to_id_num = 0
@@ -154,7 +160,7 @@ def to_coco(dataset, path = 'voc_to_coco', user='max_bong'):
                "name": user
                }
               ],
-         "id_to_categories" :
+         "categories" :
              [{"id":key,
                "name" : value,
                "supercategory": f"{user}_project"} for key, value in dataset.id_to_categories.items()],
@@ -263,7 +269,10 @@ def to_voc(dataset, path = 'coco_to_voc'):
         with open(f'{path}/{key.rsplit(".",1)[0]}.xml','w') as f :
             f.write(voc)
 
+def get_image(annotation) :
+    return list(annotation.files_dict.keys())
 
+'''
 a = COCO('_annotations.coco.json')
 to_voc(a,'coco_to_voc')
 to_yolo(a,'coco_to_yolo')
@@ -273,3 +282,4 @@ to_yolo(b,'voc_to_yolo')
 c = YOLO(glob.glob('*.txt'),'labels.txt')
 to_coco(c,'yolo_to_coco')
 to_voc(c,'yolo_to_voc')
+'''
