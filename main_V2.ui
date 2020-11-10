@@ -259,8 +259,104 @@
                  <property name="spacing">
                   <number>0</number>
                  </property>
+                 <item row="0" column="1">
+                  <widget class="QFrame" name="frame">
+                   <property name="frameShape">
+                    <enum>QFrame::NoFrame</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                   <widget class="QMdiArea" name="mdiArea">
+                    <property name="geometry">
+                     <rect>
+                      <x>0</x>
+                      <y>10</y>
+                      <width>200</width>
+                      <height>160</height>
+                     </rect>
+                    </property>
+                    <property name="frameShape">
+                     <enum>QFrame::Box</enum>
+                    </property>
+                    <property name="background">
+                     <brush brushstyle="Dense6Pattern">
+                      <color alpha="100">
+                       <red>255</red>
+                       <green>255</green>
+                       <blue>255</blue>
+                      </color>
+                     </brush>
+                    </property>
+                    <property name="viewMode">
+                     <enum>QMdiArea::SubWindowView</enum>
+                    </property>
+                    <property name="tabsClosable">
+                     <bool>false</bool>
+                    </property>
+                    <property name="tabsMovable">
+                     <bool>false</bool>
+                    </property>
+                    <property name="tabShape">
+                     <enum>QTabWidget::Rounded</enum>
+                    </property>
+                    <property name="tabPosition">
+                     <enum>QTabWidget::North</enum>
+                    </property>
+                   </widget>
+                   <widget class="QMdiArea" name="mdiArea_2">
+                    <property name="geometry">
+                     <rect>
+                      <x>80</x>
+                      <y>30</y>
+                      <width>200</width>
+                      <height>160</height>
+                     </rect>
+                    </property>
+                    <property name="background">
+                     <brush brushstyle="SolidPattern">
+                      <color alpha="100">
+                       <red>160</red>
+                       <green>160</green>
+                       <blue>160</blue>
+                      </color>
+                     </brush>
+                    </property>
+                   </widget>
+                  </widget>
+                 </item>
                  <item row="2" column="1">
                   <widget class="QFrame" name="frame_2">
+                   <property name="frameShape">
+                    <enum>QFrame::NoFrame</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="0">
+                  <widget class="QFrame" name="frame_9">
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="0">
+                  <widget class="QFrame" name="frame_4">
+                   <property name="frameShape">
+                    <enum>QFrame::NoFrame</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="1" column="2">
+                  <widget class="QFrame" name="frame_3">
                    <property name="frameShape">
                     <enum>QFrame::NoFrame</enum>
                    </property>
@@ -297,46 +393,6 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="0" column="1">
-                  <widget class="QFrame" name="frame">
-                   <property name="frameShape">
-                    <enum>QFrame::NoFrame</enum>
-                   </property>
-                   <property name="frameShadow">
-                    <enum>QFrame::Raised</enum>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="2">
-                  <widget class="QFrame" name="frame_3">
-                   <property name="frameShape">
-                    <enum>QFrame::NoFrame</enum>
-                   </property>
-                   <property name="frameShadow">
-                    <enum>QFrame::Raised</enum>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="1" column="0">
-                  <widget class="QFrame" name="frame_4">
-                   <property name="frameShape">
-                    <enum>QFrame::NoFrame</enum>
-                   </property>
-                   <property name="frameShadow">
-                    <enum>QFrame::Raised</enum>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="0" column="0">
-                  <widget class="QFrame" name="frame_9">
-                   <property name="frameShape">
-                    <enum>QFrame::StyledPanel</enum>
-                   </property>
-                   <property name="frameShadow">
-                    <enum>QFrame::Raised</enum>
-                   </property>
-                  </widget>
-                 </item>
                 </layout>
                </widget>
               </widget>
@@ -345,21 +401,12 @@
            </widget>
           </item>
           <item>
-           <widget class="QFrame" name="frame_10">
+           <widget class="QWidget" name="widget_10" native="true">
             <property name="minimumSize">
              <size>
               <width>1</width>
               <height>0</height>
              </size>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::Box</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Plain</enum>
-            </property>
-            <property name="lineWidth">
-             <number>1</number>
             </property>
            </widget>
           </item>
@@ -417,16 +464,6 @@
                  <property name="spacing">
                   <number>0</number>
                  </property>
-                 <item row="0" column="1">
-                  <widget class="QFrame" name="frame_5">
-                   <property name="frameShape">
-                    <enum>QFrame::StyledPanel</enum>
-                   </property>
-                   <property name="frameShadow">
-                    <enum>QFrame::Raised</enum>
-                   </property>
-                  </widget>
-                 </item>
                  <item row="1" column="1">
                   <widget class="QLabel" name="Image_D_V">
                    <property name="frameShape">
@@ -449,6 +486,16 @@
                  </item>
                  <item row="1" column="0">
                   <widget class="QFrame" name="frame_7">
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
+                   </property>
+                   <property name="frameShadow">
+                    <enum>QFrame::Raised</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="0" column="1">
+                  <widget class="QFrame" name="frame_5">
                    <property name="frameShape">
                     <enum>QFrame::StyledPanel</enum>
                    </property>
@@ -593,8 +640,20 @@
        </item>
        <item>
         <widget class="QPushButton" name="select_D">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
          <property name="text">
           <string>선택삭제</string>
+         </property>
+         <property name="checkable">
+          <bool>false</bool>
+         </property>
+         <property name="autoExclusive">
+          <bool>false</bool>
+         </property>
+         <property name="flat">
+          <bool>false</bool>
          </property>
         </widget>
        </item>

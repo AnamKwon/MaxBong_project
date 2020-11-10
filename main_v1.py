@@ -74,6 +74,7 @@ class Form(QtWidgets.QMainWindow):
         self.on_similar = False
         self.on_trans = False
 
+
     def delete_file(self, mode):
         if mode == 2 :
             self.ui.Img_D_V_L.selectAll()
@@ -181,11 +182,16 @@ class Form(QtWidgets.QMainWindow):
     #     print(a.size())
     #     print(self.ui.File_L.width())
     #
-    # def mousePressEvent(self, e):  # e ; QMouseEvent
-    #     print('BUTTON PRESS')
-    #     #print(self.img_pos_view)
-    #     self.startpos = (e.x(), e.y())
-    #     #self.ui.Image_D_H.setHidden(not self.ui.Image_D_H.isHidden())
+    def mousePressEvent(self, e):  # e ; QMouseEvent
+        print('BUTTON PRESS')
+        if e.button() == QtCore.Qt.LeftButton :
+            self.ui.frame.setAutoFillBackground(True)
+        if e.button() == QtCore.Qt.RightButton :
+            self.ui.frame.setAutoFillBackground(False)
+        #print(self.img_pos_view)
+
+
+        #self.ui.Image_D_H.setHidden(not self.ui.Image_D_H.isHidden())
     #
     # def mouseMoveEvent(self, e):
     #     x = e.x() - 251
@@ -223,8 +229,6 @@ class Form(QtWidgets.QMainWindow):
                 painterInstance.setFont(QtGui.QFont('Microsoft Sans Serif',10))
                 painterInstance.drawText(x+5, y+15, label)
                 painterInstance.end()
-
-        self.ui.Image_V.setGeometry(0,0,img.width(),img.height())
         self.ui.Image_V.setPixmap(img)
         painterInstance.end()
         if self.on_similar :
@@ -233,6 +237,16 @@ class Form(QtWidgets.QMainWindow):
 
     @pyqtSlot()
     def Img_view_D(self):
+        # Qframe으로 백그라운드 방식
+        # 오브젝트들을 선택할수 잇게 가능할듯?
+        # img = QtGui.QPixmap(r'./dataset/coco/000002.jpg')
+        # p = QtGui.QPalette()
+        # p.setBrush(QtGui.QPalette.Background, QtGui.QBrush(img))
+        # self.ui.frame.setMinimumSize(1000,1000)
+        # self.ui.frame.setMaximumSize(1000,1000)
+        # self.ui.frame.setAutoFillBackground(True)
+        # self.ui.frame.setPalette(p)
+        # self.ui.mdiArea.setStyleSheet('color:rgb(255,0,0);')
         img = QtGui.QPixmap()
         img_file = self.ui.Img_D_V_L.currentItem().text()
         file_path = f'{self.name_to_path[img_file]}/{img_file}'
@@ -263,7 +277,7 @@ class Form(QtWidgets.QMainWindow):
                 dataset = VOC(xml_files)
                 file_list = get_image(dataset)
             elif val == 'YOLO' :
-                label_file = QtWidgets.QFileDialog.getOpenFileName(filter="Labels (*.txt)",directory=files_path)[0]
+                label_file = QtWidgets.QFileDialog.getOpenFileName(filter="Labels (*label*.txt)",directory=files_path)[0]
                 if label_file == '':
                     return
                 txt_files = glob(f'*.txt')
@@ -341,3 +355,7 @@ if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
     w = Form()
     sys.exit(app.exec())
+
+QtWidgets.QFrame.setMinimumSize()
+QtWidgets.QLabel.setStyle()
+QtWidgets.QMdiArea
