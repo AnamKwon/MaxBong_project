@@ -102,7 +102,7 @@ class Form(QtWidgets.QMainWindow):
             if self.ui2.ui.height.isChecked():
                 self.trans_form_bools[2] = self.ui2.ui.height_input.text()
 
-#--------------------변환작업-------------------------------------------#
+    #--------------------변환작업-------------------------------------------#
     def Trans_form_prossing(self):
         if [False,False,False] == self.trans_form_bools:
             return
@@ -138,8 +138,8 @@ class Form(QtWidgets.QMainWindow):
                 objects.append({key:{'bbox':bbox,'segmentation':[]}})
 
             self.new_dataset[name] = {'width':width,'height':height,'depth':3,'object':objects}
-
     # --------------------변환작업-------------------------------------------#
+
     def Img_check(self):
         self.on_similar = True
         self.ui.right_layout.setHidden(not self.ui.right_layout.isHidden())
@@ -181,9 +181,10 @@ class Form(QtWidgets.QMainWindow):
     # def resizeEvent(self, a) :
     #     print(a.size())
     #     print(self.ui.File_L.width())
-    #
+
     def mousePressEvent(self, e):  # e ; QMouseEvent
         print('BUTTON PRESS')
+        print(self.ui.Image_v.childAt(e.pos()).pos())
         if e.button() == QtCore.Qt.LeftButton :
             self.ui.frame.setAutoFillBackground(True)
         if e.button() == QtCore.Qt.RightButton :
@@ -200,6 +201,8 @@ class Form(QtWidgets.QMainWindow):
     #     if y > 550 :
     #         print(1)
     #     print(text)
+
+
     def test_list(self):
         self.test_item = self.ui.label_object.currentRow()
 
@@ -358,4 +361,3 @@ if __name__ == '__main__':
 
 QtWidgets.QFrame.setMinimumSize()
 QtWidgets.QLabel.setStyle()
-QtWidgets.QMdiArea
